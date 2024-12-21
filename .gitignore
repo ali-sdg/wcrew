@@ -1,0 +1,14 @@
+# Node.js
+node_modules/
+dist/
+logs/
+
+
+# Jest Coverage
+coverage/
+
+# OS and IDE files
+.DS_Store
+*.log
+.vscode/
+*.swp
