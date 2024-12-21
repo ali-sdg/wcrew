@@ -4,7 +4,6 @@ import { logger } from '../utils/logger';
 export const requestLogger = (req: Request, res: Response, next: NextFunction) => {
   const startTime = Date.now();
 
-  // ثبت اطلاعات درخواست
   logger.info({
     message: 'Incoming Request',
     method: req.method,
