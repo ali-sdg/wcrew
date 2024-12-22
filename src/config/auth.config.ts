@@ -4,6 +4,11 @@ import { config } from './index';
 
 type VerifyCallback = (error: any, user?: any, info?: any) => void;
 
+type User = {
+  accessToken: string;
+  refreshToken: string;
+  profile: any;
+};
 
 passport.use(
   new OAuth2Strategy(
@@ -24,6 +29,6 @@ passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser((user: User | null, done) => {
   done(null, user);
 });

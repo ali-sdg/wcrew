@@ -7,8 +7,8 @@ const redisClient = new Redis();
 
 export const rateLimiter = rateLimit({
   store: new RateLimitRedisStore({
-    sendCommand: (...args: string[]) => {
-      return redisClient.call(...args) as Promise<any>; 
+    sendCommand: (...args: (string | number)[]) => {
+      return redisClient.call(...(args as [string, ...Array<string | number>])) as Promise<any>;
     },
   }),
   windowMs: 15 * 60 * 1000, 
