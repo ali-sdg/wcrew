@@ -19,6 +19,7 @@ passport.use(
       clientSecret: config.META_CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/auth/meta/callback',
     },
+    
     (accessToken: string, refreshToken: string, profile: any, done: VerifyCallback) => {
       done(null, { accessToken, refreshToken, profile });
     }

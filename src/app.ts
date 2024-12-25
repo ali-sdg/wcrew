@@ -9,27 +9,33 @@ import authRoutes from './routes/auth.routes';
 import { rateLimiter } from './middlewares/rateLimiter';
 import { requestLogger } from './middlewares/logging.middleware';
 
-
 export const createApp = (): Application => {
   const app = express();
 
+  // Security and optimization middlewares
   app.use(helmet());
   app.use(compression());
   app.use(cors());
+
+  // Request processing middlewares
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+  // Middleware for session management
+
   app.use(
     session({
-      secret: 'your-secret-key',
+      secret: process.env.SESSION_SECRET || 'default-fallback-key',
       resave: false,
       saveUninitialized: true,
     })
   );
 
+  // Setting up Passport for authentication
   app.use(passport.initialize());
   app.use(passport.session());
 
+  // Rate limiting
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
@@ -37,10 +43,11 @@ export const createApp = (): Application => {
   app.use(limiter);
   app.use(rateLimiter);
 
-  app.use('/auth', authRoutes);
+  // Middleware for logging requests
   app.use(requestLogger);
 
-
+  // Routes for authentication
+  app.use('/auth', authRoutes);
 
   return app;
 };
