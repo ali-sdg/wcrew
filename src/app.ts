@@ -2,7 +2,6 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
-import rateLimit from 'express-rate-limit';
 import session from 'express-session';
 import passport from 'passport';
 import authRoutes from './routes/auth.routes';
@@ -36,11 +35,6 @@ export const createApp = (): Application => {
   app.use(passport.session());
 
   // Rate limiting
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-  });
-  app.use(limiter);
   app.use(rateLimiter);
 
   // Middleware for logging requests
