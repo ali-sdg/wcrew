@@ -36,11 +36,6 @@ export const createApp = (): Application => {
   app.use(passport.session());
 
   // Rate limiting
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-  });
-  app.use(limiter);
   app.use(rateLimiter);
 
   // Middleware for logging requests
